@@ -1,12 +1,9 @@
 package com.example.dddstudy.domain.entity;
 
+import com.example.dddstudy.domain.valueEntity.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import com.example.dddstudy.domain.valueEntity.Address;
-import com.example.dddstudy.domain.valueEntity.Birthday;
-import com.example.dddstudy.domain.valueEntity.FullName;
-import com.example.dddstudy.domain.valueEntity.Gender;
 
 import java.util.UUID;
 
@@ -15,7 +12,7 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
     @EqualsAndHashCode.Include
-    final UUID id;
+    final UserId id;
     FullName name;
     final Birthday birthday;
     final Gender gender;

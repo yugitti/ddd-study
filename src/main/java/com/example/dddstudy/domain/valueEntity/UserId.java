@@ -6,7 +6,7 @@ import java.util.UUID;
 @Getter
 public class UserId {
     final UUID id;
-    UserId(){
+    public UserId(){
         this.id = UUID.randomUUID();
     }
 }

@@ -61,4 +61,22 @@ public enum Prefectures {
         this.text = text;
     }
 
+    public static Prefectures fromCode(int code) {
+        for (Prefectures prefectures : Prefectures.values()) {
+            if (prefectures.getCode() == code) {
+                return prefectures;
+            }
+        }
+        throw new IllegalArgumentException("Unknown code: " + code);
+    }
+
+    public String getFullText(){
+        return switch (this) {
+            case HOKKAIDO -> getText();
+            case TOKYO -> getText() + "都";
+            case KYOTO, OSAKA -> getText() + "府";
+            default -> getText() + "県";
+        };
+    }
+
 }
