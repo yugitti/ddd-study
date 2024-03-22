@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public class UserRepository implements IUserRepository {
     @Override
     public void save(User user){

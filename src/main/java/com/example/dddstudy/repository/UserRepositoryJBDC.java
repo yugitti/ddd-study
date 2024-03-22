@@ -29,7 +29,7 @@ public class UserRepositoryJBDC implements IUserRepository {
                 .withTableName("Addresses")
                 .usingGeneratedKeyColumns("address_id");
         SqlParameterSource addressParams = new MapSqlParameterSource()
-                .addValue("prefecture", user.getAddress().prefectures())
+                .addValue("prefectures", user.getAddress().prefectures())
                 .addValue("city", user.getAddress().city())
                 .addValue("line1", user.getAddress().line1())
                 .addValue("line2", user.getAddress().line2());

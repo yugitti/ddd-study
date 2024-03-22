@@ -1,9 +1,11 @@
 package com.example.dddstudy.presentation;
 
 import com.example.dddstudy.domain.entity.User;
-import com.example.dddstudy.domain.mapper.UserMapper;
 import com.example.dddstudy.domain.valueEntity.*;
-import com.example.dddstudy.usecase.UserUsecase;
+import com.example.dddstudy.presentation.dto.CreateUserBody;
+import com.example.dddstudy.presentation.mapper.CreateUserMapper;
+import com.example.dddstudy.usecase.CreateUserUsecase;
+import com.example.dddstudy.usecase.dto.CreateUserParams;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private final UserUsecase userUsecase;
+    private final CreateUserUsecase userUsecase;
+    private final CreateUserMapper userCreateMapper;
     @Autowired
-    UserController(UserUsecase userUsecase){
+    UserController(CreateUserUsecase userUsecase, CreateUserMapper userCreateMapper){
         this.userUsecase = userUsecase;
+        this.userCreateMapper = userCreateMapper;
     }
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,9 +35,9 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/create",produces = MediaType.APPLICATION_JSON_VALUE )
-    public void userCreateController(@Valid @RequestBody UserCreateBody body){
-        User user = UserMapper.INSTANCE.userCreateBodyToUser(body);
-        userUsecase.createUser(user);
+    public void userCreateController(@Valid @RequestBody CreateUserBody body){
+        CreateUserParams params = this.userCreateMapper.toCreateUserParams(body);
+        userUsecase.run(params);
         System.out.println("hello");
 
     }
