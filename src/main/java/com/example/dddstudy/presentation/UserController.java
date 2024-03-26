@@ -5,7 +5,10 @@ import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.presentation.dto.CreateUserBody;
 import com.example.dddstudy.presentation.mapper.CreateUserMapper;
 import com.example.dddstudy.usecase.CreateUserUsecase;
-import com.example.dddstudy.usecase.dto.CreateUserParams;
+import com.example.dddstudy.usecase.FindByIdUserUsecase;
+import com.example.dddstudy.usecase.dto.input.CreateUserParams;
+import com.example.dddstudy.usecase.dto.input.FindByIdUserParams;
+import com.example.dddstudy.usecase.dto.output.UserRes;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,31 +18,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private final CreateUserUsecase userUsecase;
+    private final CreateUserUsecase createUserUsecase;
     private final CreateUserMapper userCreateMapper;
+    private final FindByIdUserUsecase findByUserUsecase;
     @Autowired
-    UserController(CreateUserUsecase userUsecase, CreateUserMapper userCreateMapper){
-        this.userUsecase = userUsecase;
+    UserController(CreateUserUsecase userUsecase, CreateUserMapper userCreateMapper, FindByIdUserUsecase findByUserUsecase){
+        this.createUserUsecase = userUsecase;
         this.userCreateMapper = userCreateMapper;
+        this.findByUserUsecase = findByUserUsecase;
     }
 
-    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public User userController(){
-        UserId id = new UserId();
-        FullName name = new FullName("Yugi", "Tsutomu");
-        Birthday birthday = new Birthday(1980, 8, 15);
-        Gender gender = Gender.Male;
-        Address address = new Address(Prefectures.TOKYO, "XXX", "YYY", "3");
-
-        return new User(id, name, birthday, gender, address);
+    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserRes userFindByIdController(@PathVariable("id") String id) throws Exception {
+        UserId userId = new UserId(id);
+        FindByIdUserParams params = new FindByIdUserParams(userId);
+        return this.findByUserUsecase.run(params);
     }
 
     @PutMapping(value = "/user/create",produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus(HttpStatus.CREATED)
     public User userCreateController(@Valid @RequestBody CreateUserBody body){
         CreateUserParams params = this.userCreateMapper.toCreateUserParams(body);
-        return userUsecase.run(params);
+        return createUserUsecase.run(params);
 
     }
 }

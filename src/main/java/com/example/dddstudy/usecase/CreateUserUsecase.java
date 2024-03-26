@@ -3,7 +3,7 @@ package com.example.dddstudy.usecase;
 import com.example.dddstudy.domain.entity.User;
 import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.domain.repository.IUserRepository;
-import com.example.dddstudy.usecase.dto.CreateUserParams;
+import com.example.dddstudy.usecase.dto.input.CreateUserParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

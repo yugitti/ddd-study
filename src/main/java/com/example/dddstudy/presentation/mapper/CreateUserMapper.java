@@ -2,7 +2,7 @@ package com.example.dddstudy.presentation.mapper;
 
 import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.presentation.dto.CreateUserBody;
-import com.example.dddstudy.usecase.dto.CreateUserParams;
+import com.example.dddstudy.usecase.dto.input.CreateUserParams;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

@@ -9,6 +9,9 @@ public class UserId {
     public UserId(){
         this.id = UUID.randomUUID();
     }
+    public UserId(String id){
+        this.id = UUID.fromString(id);
+    }
 
     public byte[] asBytes() {
         long msb = id.getMostSignificantBits();
@@ -24,4 +27,5 @@ public class UserId {
 
         return buffer;
     }
+
 }

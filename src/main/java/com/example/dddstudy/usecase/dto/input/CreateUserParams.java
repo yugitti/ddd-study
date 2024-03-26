@@ -1,4 +1,4 @@
-package com.example.dddstudy.usecase.dto;
+package com.example.dddstudy.usecase.dto.input;
 
 import com.example.dddstudy.domain.valueEntity.Address;
 import com.example.dddstudy.domain.valueEntity.Birthday;
