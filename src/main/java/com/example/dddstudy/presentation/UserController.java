@@ -8,6 +8,7 @@ import com.example.dddstudy.usecase.CreateUserUsecase;
 import com.example.dddstudy.usecase.dto.CreateUserParams;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +36,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/create",produces = MediaType.APPLICATION_JSON_VALUE )
-    public void userCreateController(@Valid @RequestBody CreateUserBody body){
+    @ResponseStatus(HttpStatus.CREATED)
+    public User userCreateController(@Valid @RequestBody CreateUserBody body){
         CreateUserParams params = this.userCreateMapper.toCreateUserParams(body);
-        userUsecase.run(params);
-        System.out.println("hello");
+        return userUsecase.run(params);
 
     }
 }

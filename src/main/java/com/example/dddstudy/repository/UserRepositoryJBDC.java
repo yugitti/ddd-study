@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class UserRepositoryJBDC implements IUserRepository {
@@ -36,10 +37,9 @@ public class UserRepositoryJBDC implements IUserRepository {
         Number addressId = insertAddress.executeAndReturnKey((addressParams));
 
         SimpleJdbcInsert insertUsers = new SimpleJdbcInsert(jdbcTemplate)
-                .withTableName("Users")
-                .usingGeneratedKeyColumns("address_id");
+                .withTableName("Users");
         SqlParameterSource userParams = new MapSqlParameterSource()
-                .addValue("user_id", user.getId().toString())
+                .addValue("user_id", user.getId().asBytes())
                 .addValue("first_name", user.getName().firstName())
                 .addValue("second_name", user.getName().secondName())
                 .addValue("birthday", user.getBirthday().getBirthday())
@@ -60,4 +60,5 @@ public class UserRepositoryJBDC implements IUserRepository {
     public boolean exists(User user){
         return true;
     }
+
 }

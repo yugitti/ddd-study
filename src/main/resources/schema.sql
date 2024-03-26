@@ -2,7 +2,7 @@ CREATE TYPE gender_type AS ENUM ('Male', 'Female', 'Other');
 
 CREATE TABLE IF NOT EXISTS Addresses (
     address_id SERIAL PRIMARY KEY,
-    prefecture VARCHAR(255) NOT NULL,
+    prefectures VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     line1 VARCHAR(255) NOT NULL,
     line2 VARCHAR(255)

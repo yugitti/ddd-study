@@ -16,10 +16,10 @@ public class CreateUserUsecase {
         this.userRepository = userRepository;
     }
 
-    public void run(CreateUserParams params){
+    public User run(CreateUserParams params){
         User user = createUser(params);
         userRepository.save(user);
-        return;
+        return user;
     }
 
     private User createUser(CreateUserParams params){
