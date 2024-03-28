@@ -9,4 +9,5 @@ public interface IUserRepository {
     void save(User user);
     Optional<User> findById(UserId id);
     boolean exists(User user);
+    void delete(UserId id);
 }

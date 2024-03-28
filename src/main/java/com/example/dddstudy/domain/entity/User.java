@@ -14,14 +14,17 @@ public class User {
     @EqualsAndHashCode.Include
     final UserId id;
     FullName name;
-    final Birthday birthday;
-    final Gender gender;
+    Birthday birthday;
+    Gender gender;
     Address address;
 
     public void changeName(FullName name){
         this.name = name;
     }
 
+    public void changeBirthday(Birthday birthday){this.birthday = birthday;}
+
+    public void changeGender(Gender gender){this.gender = gender;}
     public void changeAddress(Address address){
         this.address = address;
     }

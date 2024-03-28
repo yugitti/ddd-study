@@ -23,4 +23,6 @@ public class UserRepository implements IUserRepository {
     public boolean exists(User user){
         return true;
     }
+
+    public void delete(UserId userId){ return;}
 }

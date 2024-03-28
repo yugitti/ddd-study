@@ -5,12 +5,14 @@ import com.example.dddstudy.domain.repository.IUserRepository;
 import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
 import java.util.Optional;
 
 @Repository
@@ -23,7 +25,20 @@ public class UserRepositoryJBDC implements IUserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
     @Override
-    public void save(User user){
+    public void save(User user) {
+
+        Integer addressId = getAddressIdByUserId(user.getId());
+        if (addressId != null) {
+            // 存在する場合、updateメソッドを呼び出し
+            update(user, addressId);
+        } else {
+            // 存在しない場合、insertメソッドを呼び出し
+            insert(user);
+        }
+    }
+
+
+    private void insert(User user){
         SimpleJdbcInsert insertAddress = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("Addresses")
                 .usingGeneratedKeyColumns("address_id");
@@ -45,7 +60,28 @@ public class UserRepositoryJBDC implements IUserRepository {
                 .addValue("address_id", addressId);
 
         insertUsers.execute(userParams);
-        return;
+    }
+
+    private void update(User user, Integer address_id){
+
+        String sqlForAddress = "UPDATE Addresses SET prefectures = ?, city = ?, line1 = ?, line2 = ? WHERE address_id = ?";
+
+        jdbcTemplate.update(sqlForAddress,
+                user.getAddress().prefectures().toString(),
+                user.getAddress().city(),
+                user.getAddress().line1(),
+                user.getAddress().line2(),
+                address_id);
+
+        String sqlForUser = "UPDATE Users SET first_name = ?, second_name = ?, birthday = ?, gender = ?, address_id = ? WHERE user_id = ?";
+
+        jdbcTemplate.update(sqlForUser,
+                user.getName().firstName(),
+                user.getName().secondName(),
+                user.getBirthday().getBirthdayAsLocalDate(),
+                user.getGender().toString(),
+                address_id,
+                user.getId().asBytes());
 
     }
 
@@ -56,7 +92,7 @@ public class UserRepositoryJBDC implements IUserRepository {
                 FROM Users as u
                 JOIN Addresses as a
                 On u.address_id=a.address_id
-                HAVING u.user_id= ?
+                WHERE u.user_id= ?
                 LIMIT 1
                 ;
                 """;
@@ -66,7 +102,28 @@ public class UserRepositoryJBDC implements IUserRepository {
             return Optional.of(UserMapper.mapToUser(rs));
         }, userId.getId());
     }
+    // user_idに対応するaddress_idを取得するメソッド
+    public Integer getAddressIdByUserId(UserId userId) {
+        String sql = "SELECT address_id FROM USERS WHERE user_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, userId.getId());
+        } catch (EmptyResultDataAccessException e) {
+            // レコードが見つからない場合はnullを返す
+            return null;
+        }
+    }
 
+    @Override
+    public void delete(UserId userId){
+        String sql = """
+                DELETE
+                FROM Users as u
+                WHERE u.user_id= ?
+                ;
+                """;
+        jdbcTemplate.update(sql, userId);
+        return;
+    }
     @Override
     public boolean exists(User user){
         return true;

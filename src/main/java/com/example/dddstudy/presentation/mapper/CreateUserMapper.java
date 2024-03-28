@@ -2,8 +2,11 @@ package com.example.dddstudy.presentation.mapper;
 
 import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.presentation.dto.CreateUserBody;
+import com.example.dddstudy.presentation.dto.UpdateUserBody;
 import com.example.dddstudy.usecase.dto.input.CreateUserParams;
+import com.example.dddstudy.usecase.dto.input.UpdateUserParams;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -15,6 +18,16 @@ public class CreateUserMapper {
                 mapBirthday(body.getBirthday()),
                 mapGender(body.getGender()),
                 mapAddress(body.getAddress()));
+    }
+
+    public UpdateUserParams toUpdateUserParams(UpdateUserBody body){
+        return new UpdateUserParams(
+                new UserId(body.getId()),
+                StringUtils.hasText(body.getName()) ? mapFullName(body.getName()) : null,
+                StringUtils.hasText(body.getBirthday()) ? mapBirthday(body.getBirthday()) : null,
+                (body.getGender() != null && body.getGender() >= 0) ? mapGender(body.getGender()): null,
+                body.getAddress() != null ?mapAddress(body.getAddress()) : null
+        );
     }
 
     private Gender mapGender(int i){

@@ -4,6 +4,7 @@ import com.example.dddstudy.domain.entity.User;
 import com.example.dddstudy.domain.valueEntity.*;
 import com.example.dddstudy.domain.repository.IUserRepository;
 import com.example.dddstudy.usecase.dto.input.CreateUserParams;
+import com.example.dddstudy.usecase.dto.output.UserRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,15 @@ public class CreateUserUsecase {
         this.userRepository = userRepository;
     }
 
-    public User run(CreateUserParams params){
+    public UserRes run(CreateUserParams params){
         User user = createUser(params);
         userRepository.save(user);
-        return user;
+        return new UserRes(
+                user.getId(),
+                user.getName(),
+                user.getBirthday(),
+                user.getGender(),
+                user.getAddress());
     }
 
     private User createUser(CreateUserParams params){

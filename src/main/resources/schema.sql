@@ -1,5 +1,3 @@
-CREATE TYPE gender_type AS ENUM ('Male', 'Female', 'Other');
-
 CREATE TABLE IF NOT EXISTS Addresses (
     address_id SERIAL PRIMARY KEY,
     prefectures VARCHAR(255) NOT NULL,
@@ -13,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Users (
     first_name VARCHAR(255) NOT NULL,
     second_name VARCHAR(255) NOT NULL,
     birthday DATE NOT NULL,
-    gender gender_type NOT NULL,
+    gender VARCHAR(255) NOT NULL, -- ENUMの代わりにVARCHARを使用
     address_id INT,
     FOREIGN KEY (address_id) REFERENCES Addresses(address_id)
 );
