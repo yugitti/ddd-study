@@ -12,9 +12,9 @@ terraform {
   // save tfstate file to s3 to share with team
   backend "s3" {
     region  = "ap-northeast-1"
-    key     = "tastylog-dev.tfstate"
+    key     = "ddd-study-dev.tfstate"
     profile = "tsukiyodev"
-    bucket  = "tastlylog-tfstate-bucket-yugi"
+    bucket  = "ddd-study-tfstate-bucket-yugi"
   }
 }
 
@@ -33,17 +33,3 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# --------------------------------
-# Provider Configuration
-# --------------------------------
-variable "project" {
-  type = string
-}
-
-variable "environment" {
-  type = string
-}
-
-variable "domain" {
-  type = string
-}
