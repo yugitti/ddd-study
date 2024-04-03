@@ -26,7 +26,7 @@ resource "aws_lb_target_group" "nlb_target_group" {
 
 resource "aws_lb_listener" "nlb_listener" {
   load_balancer_arn = aws_lb.nlb.arn
-  port              = var.container_port
+  port              = 80
   protocol          = "TCP"
   default_action {
     type             = "forward"

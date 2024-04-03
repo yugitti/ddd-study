@@ -13,7 +13,6 @@ terraform {
   backend "s3" {
     region  = "ap-northeast-1"
     key     = "ddd-study-dev-microservice.tfstate"
-    profile = "tsukiyodev"
     bucket  = "ddd-study-tfstate-bucket-yugi"
   }
 }
@@ -22,7 +21,6 @@ terraform {
 # Provider Configuration
 # --------------------------------
 provider "aws" {
-  profile = "tsukiyodev"
   region  = "ap-northeast-1"
 }
 

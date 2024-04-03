@@ -33,6 +33,7 @@ resource "aws_api_gateway_method" "user_id_get" {
 
   request_parameters = {
     "method.request.header.x-api-key" = true
+    "method.request.path.id" = true
   }
 }
 
@@ -49,7 +50,7 @@ resource "aws_api_gateway_integration" "user_id_integration" {
   http_method             = aws_api_gateway_method.user_id_get.http_method
   type                    = "HTTP_PROXY"
   integration_http_method = "GET"
-  uri                     = "http://${aws_lb.nlb.dns_name}"
+  uri                     = "http://${aws_lb.nlb.dns_name}/user/{id}"
   passthrough_behavior    = "WHEN_NO_MATCH"
 
   connection_type = "VPC_LINK"
@@ -60,6 +61,7 @@ resource "aws_api_gateway_integration" "user_id_integration" {
 
   request_parameters = {
     "integration.request.header.x-api-key" = "method.request.header.x-api-key"
+    "integration.request.path.id" = "method.request.path.id"
   }
 
 }
@@ -102,7 +104,7 @@ resource "aws_api_gateway_integration" "user_create_integration" {
   http_method             = aws_api_gateway_method.user_create_put.http_method
   type                    = "HTTP_PROXY"
   integration_http_method = "PUT"
-  uri                     = "http://${aws_lb.nlb.dns_name}"
+  uri                     = "http://${aws_lb.nlb.dns_name}/user/create"
   passthrough_behavior    = "WHEN_NO_MATCH"
 
   connection_type = "VPC_LINK"
