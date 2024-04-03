@@ -27,7 +27,7 @@ resource "aws_service_discovery_service" "ecs_service_discovery" {
 
 resource "aws_service_discovery_private_dns_namespace" "private_dns_namespace" {
   name        = "${var.project}-${var.environment}-private-dns-namespace"
-  vpc         = local.vpc_id
+  vpc         = var.vpc_id
   description = "Private DNS namespace for ${var.project}-${var.environment} ECS service discovery"
   tags = {
     Name    = "${var.project}-${var.environment}-private-dns-namespace"

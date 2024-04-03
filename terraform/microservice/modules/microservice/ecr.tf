@@ -18,7 +18,7 @@ resource "null_resource" "default" {
   }
 
   provisioner "local-exec" {
-    command = "sh ${path.root}/build_push.sh"
+    command = "sh ${path.module}/build_push.sh"
 
     environment = {
       AWS_REGION     = var.region
