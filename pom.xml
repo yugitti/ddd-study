@@ -16,6 +16,28 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
+	開発環境と本番（デプロイ）環境で異なるデータベース設定を使用するために、Spring Bootではプロファイルを使ってapplication.propertiesファイルを環境ごとに分けることができます。これにより、異なる環境で異なる設定を容易に管理することが可能になります。
+
+	application.propertiesの分割
+	共通設定のapplication.properties:
+
+	アプリケーションの全環境で共通の設定を保持します。
+	例: spring.application.name=ddd-study
+	開発環境用のapplication-dev.properties:
+
+	開発環境特有の設定（例: ローカルのMySQL設定）を保持します。
+	ファイル名はapplication-{profile}.propertiesの形式で、ここでは{profile}にdevを使用します。
+	本番環境用のapplication-prod.properties:
+
+	本番環境特有の設定（例: AWS Auroraの接続設定）を保持します。
+	{profile}にはprodを使用します。
+	Mavenでのビルド設定
+	Mavenのビルドプロセス中に特定のプロファイルをアクティブにするために、pom.xmlにプロファイル固有の設定を追加します。以下は、開発環境と本番環境のプロファイルを設定する例です：
+
+	xml
+	Copy code
+
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -43,12 +65,16 @@
 			<version>1.4.2.Final</version>
 			<scope>provided</scope>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.h2database</groupId>-->
+<!--			<artifactId>h2</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>

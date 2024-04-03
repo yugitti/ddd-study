@@ -52,7 +52,7 @@ public class UserRepositoryJBDC implements IUserRepository {
         SimpleJdbcInsert insertUsers = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("Users");
         SqlParameterSource userParams = new MapSqlParameterSource()
-                .addValue("user_id", user.getId().asBytes())
+                .addValue("user_id", user.getId().getId())
                 .addValue("first_name", user.getName().firstName())
                 .addValue("second_name", user.getName().secondName())
                 .addValue("birthday", user.getBirthday().getBirthdayAsLocalDate())
@@ -92,15 +92,17 @@ public class UserRepositoryJBDC implements IUserRepository {
                 FROM Users as u
                 JOIN Addresses as a
                 On u.address_id=a.address_id
-                WHERE u.user_id= ?
+                WHERE u.user_id=?
                 LIMIT 1
                 ;
                 """;
 
+        String user_id = userId.asString();
+
         return jdbcTemplate.query(query, rs -> {
             if(!rs.next()) return Optional.empty();
             return Optional.of(UserMapper.mapToUser(rs));
-        }, userId.getId());
+        }, user_id);
     }
     // user_idに対応するaddress_idを取得するメソッド
     public Integer getAddressIdByUserId(UserId userId) {

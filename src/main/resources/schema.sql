@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS Addresses (
 );
 
 CREATE TABLE IF NOT EXISTS Users (
-    user_id UUID PRIMARY KEY,
+    user_id VARCHAR(36) PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     second_name VARCHAR(255) NOT NULL,
     birthday DATE NOT NULL,
     gender VARCHAR(255) NOT NULL, -- ENUMの代わりにVARCHARを使用
-    address_id INT,
+    address_id BIGINT UNSIGNED,
     FOREIGN KEY (address_id) REFERENCES Addresses(address_id)
 );

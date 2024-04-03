@@ -28,4 +28,8 @@ public class UserId {
         return buffer;
     }
 
+    public String asString(){
+        return id.toString();
+    }
+
 }
