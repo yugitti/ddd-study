@@ -29,13 +29,13 @@ resource "aws_api_gateway_method" "dummy_get_method" {
 
 # ダミーの統合の作成
 resource "aws_api_gateway_integration" "dummy_integration" {
-  rest_api_id = aws_api_gateway_rest_api.apigw.id
-  resource_id = aws_api_gateway_resource.dummy_resource.id
-  http_method = aws_api_gateway_method.dummy_get_method.http_method
+  rest_api_id             = aws_api_gateway_rest_api.apigw.id
+  resource_id             = aws_api_gateway_resource.dummy_resource.id
+  http_method             = aws_api_gateway_method.dummy_get_method.http_method
   type                    = "HTTP_PROXY"
   integration_http_method = "GET"
   # ダミーのHTTPエンドポイント。必要に応じてMock統合を使用することもできます。
-  uri  = "http://example.com"
+  uri = "http://example.com"
 }
 
 
@@ -94,9 +94,9 @@ resource "aws_api_gateway_usage_plan" "api_usage_plan" {
 resource "aws_api_gateway_usage_plan_key" "api_usage_plan_key" {
   key_id        = aws_api_gateway_api_key.api_key.id
   usage_plan_id = aws_api_gateway_usage_plan.api_usage_plan.id
-  depends_on = [aws_api_gateway_deployment.deploy]
+  depends_on    = [aws_api_gateway_deployment.deploy]
 
-  key_type      = "API_KEY"
+  key_type = "API_KEY"
 }
 
 

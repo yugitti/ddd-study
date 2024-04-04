@@ -28,5 +28,9 @@ module "microservice" {
   remote_rest_api_id = data.terraform_remote_state.network.outputs.rest_api_id
   remote_parent_id   = data.terraform_remote_state.network.outputs.parent_id
 
-
+  rds_database_name   = var.rds_database_name
+  rds_master_username = var.rds_master_username
+  rds_port            = var.rds_port
+  rds_engine          = var.rds_engine
+  rds_engine_version  = var.rds_engine_version
 }

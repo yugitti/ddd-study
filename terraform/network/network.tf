@@ -91,11 +91,11 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
-# resource "aws_route_table_association" "private_rt" {
-#   for_each       = aws_subnet.private_subnet
-#   route_table_id = aws_route_table.private_rt[each.key].id
-#   subnet_id      = each.value.id
-# }
+resource "aws_route_table_association" "private_rt" {
+  for_each       = aws_subnet.private_subnet
+  route_table_id = aws_route_table.private_rt[each.key].id
+  subnet_id      = each.value.id
+}
 
 # --------------------------------
 # Internet Gateway

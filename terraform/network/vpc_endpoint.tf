@@ -52,3 +52,12 @@ resource "aws_vpc_endpoint" "ssm_messages" {
   subnet_ids          = [for subnet in aws_subnet.private_subnet : subnet.id]
   private_dns_enabled = true
 }
+
+resource "aws_vpc_endpoint" "secrets_manager" {
+  vpc_id              = aws_vpc.vpc.id
+  service_name        = "com.amazonaws.${var.region}.secretsmanager"
+  vpc_endpoint_type   = "Interface"
+  security_group_ids  = [aws_security_group.vpc_endpoint.id]
+  subnet_ids          = [for subnet in aws_subnet.private_subnet : subnet.id]
+  private_dns_enabled = true
+}

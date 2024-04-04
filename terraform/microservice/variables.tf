@@ -86,3 +86,33 @@ variable "cloudwatch_log_prefix" {
   default     = "ecs"
 }
 
+variable "rds_database_name" {
+  description = "The name of the RDS database"
+  type        = string
+}
+
+variable "rds_master_username" {
+  description = "The master username for the RDS database"
+  type        = string
+}
+
+variable "rds_port" {
+  description = "The port the RDS database listens on"
+  type        = number
+  default     = 3306
+}
+
+variable "rds_engine" {
+  description = "The engine of the RDS database"
+  type        = string
+  default     = "aurora"
+}
+
+variable "rds_engine_version" {
+  description = "The engine version of the RDS database"
+  type        = string
+  default     = "8.0.mysql_aurora.3.01.0"
+}
+
+
+
