@@ -18,6 +18,11 @@ variable "security_group_ecs_ids" {
  description = "security group ecs id"
 }
 
+variable "security_group_rds_ids" {
+ type        = string
+ description = "security group rds id"
+}
+
 variable "ecs_task_role_arn" {
   type = string
     description = "ecs task role arn"

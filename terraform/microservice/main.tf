@@ -21,6 +21,7 @@ module "microservice" {
   subnet_public_ids           = data.terraform_remote_state.network.outputs.subnet_public_ids
   subnet_private_ids          = data.terraform_remote_state.network.outputs.subnet_private_ids
   security_group_ecs_ids      = data.terraform_remote_state.network.outputs.security_group_ecs_ids
+  security_group_rds_ids      = data.terraform_remote_state.network.outputs.security_group_rds_ids
   ecs_task_role_arn           = data.terraform_remote_state.network.outputs.iam_role_ecs_task_arn
   ecs_task_execution_role_arn = data.terraform_remote_state.network.outputs.iam_role_ecs_task_execution_arn
 

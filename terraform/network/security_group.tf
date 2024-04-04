@@ -84,6 +84,28 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
+# database security group
+resource "aws_security_group" "rds_sg" {
+  name        = "${var.project}-${var.environment}-db_sg"
+  description = "database role security group"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress{
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    security_groups = [aws_security_group.ecs_sg.id]
+  }
+
+  tags = {
+    Name    = "${var.project}-${var.environment}-db-sg"
+    Project = var.project
+    Env     = var.environment
+  }
+}
+
+
+
 # resource "aws_security_group_rule" "web_in_http" {
 #   security_group_id = aws_security_group.web_sg.id
 #   type              = "ingress"

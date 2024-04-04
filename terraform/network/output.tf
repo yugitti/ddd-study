@@ -20,6 +20,10 @@ output "security_group_alb_ids" {
 
 }
 
+output "security_group_rds_ids" {
+  value = aws_security_group.rds_sg.id
+}
+
 output "iam_role_ecs_task_arn" {
   value = aws_iam_role.ecs_task.arn
 }
