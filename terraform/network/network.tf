@@ -82,10 +82,6 @@ resource "aws_route_table" "private_rt" {
   for_each = aws_subnet.public_subnet
   vpc_id   = aws_vpc.vpc.id
 
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.main[each.key].id
-  }
 
   tags = {
     Name    = "${var.project}-${var.environment}-private-rt"
@@ -95,11 +91,11 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
-resource "aws_route_table_association" "private_rt" {
-  for_each       = aws_subnet.private_subnet
-  route_table_id = aws_route_table.private_rt[each.key].id
-  subnet_id      = each.value.id
-}
+# resource "aws_route_table_association" "private_rt" {
+#   for_each       = aws_subnet.private_subnet
+#   route_table_id = aws_route_table.private_rt[each.key].id
+#   subnet_id      = each.value.id
+# }
 
 # --------------------------------
 # Internet Gateway
@@ -125,27 +121,27 @@ resource "aws_route" "public_rt_igw_r" {
 # --------------------------------
 
 
-resource "aws_eip" "main" {
-  for_each   = aws_subnet.public_subnet
-  vpc        = true
-  depends_on = [aws_internet_gateway.igw]
-  tags = {
-    Name    = "${var.project}-${var.environment}-eip-${each.key}"
-    Project = var.project
-    Env     = var.environment
-  }
+# resource "aws_eip" "main" {
+#   for_each   = aws_subnet.public_subnet
+#   vpc        = true
+#   depends_on = [aws_internet_gateway.igw]
+#   tags = {
+#     Name    = "${var.project}-${var.environment}-eip-${each.key}"
+#     Project = var.project
+#     Env     = var.environment
+#   }
 
-}
+# }
 
-resource "aws_nat_gateway" "main" {
-  for_each      = aws_subnet.public_subnet
-  allocation_id = aws_eip.main[each.key].id
-  subnet_id     = each.value.id
-  depends_on    = [aws_internet_gateway.igw]
-  tags = {
-    Name    = "${var.project}-${var.environment}-nat-gateway-${each.key}"
-    Project = var.project
-    Env     = var.environment
-  }
-}
+# resource "aws_nat_gateway" "main" {
+#   for_each      = aws_subnet.public_subnet
+#   allocation_id = aws_eip.main[each.key].id
+#   subnet_id     = each.value.id
+#   depends_on    = [aws_internet_gateway.igw]
+#   tags = {
+#     Name    = "${var.project}-${var.environment}-nat-gateway-${each.key}"
+#     Project = var.project
+#     Env     = var.environment
+#   }
+# }
 
