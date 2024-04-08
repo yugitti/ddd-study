@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: ddd-study
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_URL}:${DB_PORT}/${DB_TABLE}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  sql:
+    init:
+      mode: always
+
+
+#spring.application.name=ddd-study
+#
+## MySQL Database Configuration
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://${DB_URL}:${DB_PORT}/${DB_TABLE}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+#spring.datasource.username=${DB_USER}
+#spring.datasource.password=${DB_PASS}
+#spring.jpa.hibernate.ddl-auto=update
+#spring.sql.init.mode=always
+#
+## JPA/Hibernate properties
+#spring.jpa.show-sql=true
+#spring.jpa.properties.hibernate.format_sql=true
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect

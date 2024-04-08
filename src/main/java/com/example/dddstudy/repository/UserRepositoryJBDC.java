@@ -106,7 +106,7 @@ public class UserRepositoryJBDC implements IUserRepository {
     }
     // user_idに対応するaddress_idを取得するメソッド
     public Integer getAddressIdByUserId(UserId userId) {
-        String sql = "SELECT address_id FROM USERS WHERE user_id = ?";
+        String sql = "SELECT address_id FROM Users WHERE user_id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, userId.getId());
         } catch (EmptyResultDataAccessException e) {

@@ -12,7 +12,7 @@ terraform {
   // save tfstate file to s3 to share with team
   backend "s3" {
     region = "ap-northeast-1"
-    key    = "ddd-study-dev-microservice.tfstate"
+    key    = "ddd-study-dev-basion.tfstate"
     bucket = "ddd-study-tfstate-bucket-yugi"
   }
 }

@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         },
                 {
           name  = "DB_PORT"
-          value = aws_rds_cluster.rds.port
+          value = tostring(aws_rds_cluster.rds.port)
         },
                 {
           name  = "DB_TABLE"
@@ -44,7 +44,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         },
         {
           name      = "DB_PASS"
-          valueFrom = "${aws_rds_cluster.rds.master_user_secret[0].secret_arn}:username::"
+          valueFrom = "${aws_rds_cluster.rds.master_user_secret[0].secret_arn}:password::"
         }
       ]
 

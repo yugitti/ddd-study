@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: ddd-study
+    datasource:
+        driver-class-name: org.h2.Driver
+        url: jdbc:h2:~/dddStudyDb
+        username: yugi
+        password: yugi
+        initialization-mode: always
+    jpa:
+        hibernate:
+            ddl-auto: none
+    sql:
+        init:
+            enabled: true
+            schema-locations: classpath:schema-test.sql
