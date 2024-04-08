@@ -100,21 +100,35 @@ resource "aws_iam_role_policy" "api_gw_cloudwatch_policy" {
 # IAM Role Policy Attachment
 # --------------------------------
 
-// For ECS
+// For ECS role
+// To access DynamoDB from ECS
 resource "aws_iam_role_policy_attachment" "ecs_dynamodb" {
   role       = aws_iam_role.ecs_task.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
 
+// To access RDS from ECS
+resource "aws_iam_role_policy_attachment" "ecs_rds" {
+  role       = aws_iam_role.ecs_task.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+}
+
 // For ECS Execution
+// Task Execution Basic Role
 resource "aws_iam_role_policy_attachment" "ecs_execution" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+// To access ECR from ECS
 resource "aws_iam_role_policy_attachment" "ecs_execution_ecr" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
+// To access Secrets Manager from ECS 
+resource "aws_iam_role_policy_attachment" "ecs_execution_secrets" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+}
 

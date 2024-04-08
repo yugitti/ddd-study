@@ -19,6 +19,34 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           hostPort      = var.container_port
         }
       ]
+      environment = [
+        {
+          name  = "RDS_SECRET_ARN"
+          value = aws_rds_cluster.rds.master_user_secret[0].secret_arn
+        },
+        {
+          name  = "DB_URL"
+          value = aws_rds_cluster.rds.endpoint
+        },
+                {
+          name  = "DB_PORT"
+          value = aws_rds_cluster.rds.port
+        },
+                {
+          name  = "DB_TABLE"
+          value = aws_rds_cluster.rds.database_name
+        }
+      ],
+      secrets = [
+        {
+          name      = "DB_USER"
+          valueFrom = "${aws_rds_cluster.rds.master_user_secret[0].secret_arn}:username::"
+        },
+        {
+          name      = "DB_PASS"
+          valueFrom = "${aws_rds_cluster.rds.master_user_secret[0].secret_arn}:username::"
+        }
+      ]
 
       logConfiguration = {
         logDriver = "awslogs"

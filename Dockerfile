@@ -22,7 +22,16 @@ ENV PATH="/opt/maven/bin:${PATH}"
 # プロジェクトをビルド
 RUN mvn clean package
 
+# start_app.shをコンテナにコピー
+COPY start_app.sh /usr/src/app/start_app.sh
+
+# start_app.shに実行権限を付与
+RUN chmod +x /usr/src/app/start_app.sh
+
+# entrypoint.shをエントリーポイントとして設定
+ENTRYPOINT ["/usr/src/app/start_app.sh"]
+
 
 # アプリケーションのjarファイルを実行
 # ここではビルドされたjarファイル名をyour-application.jarとしていますが、プロジェクトに合わせて変更してください
-CMD ["java", "-jar", "target/ddd-study.jar"]
+# CMD ["java", "-jar", "target/ddd-study.jar"]
