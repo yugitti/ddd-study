@@ -1,11 +1,5 @@
 version: 0.2
-env:
-  variables:
-    CONTAINER_NAME:ddd-study
-    REPO_NAME:ddd-study-dev-ecr
-
 phases:
-
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...

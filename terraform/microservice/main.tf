@@ -1,5 +1,5 @@
-module "microservice" {
-  source = "./modules/microservice"
+module "ecs" {
+  source = "./modules/ecs"
 
   project                = var.project
   environment            = var.environment
