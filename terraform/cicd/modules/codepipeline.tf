@@ -3,7 +3,7 @@
 # --------------------------------
 
 resource "aws_codepipeline" "codepipeline" {
-  name     = "${var.project}-${var.environment}-codepipeline"
+  name = "${var.project}-${var.environment}-codepipeline"
   # pipeline_type = "V2"
   role_arn = aws_iam_role.codepipeline_role.arn
 
@@ -25,8 +25,8 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         RepositoryName = var.source_code_repository_name
-        PollForSourceChanges: "false"
-        BranchName     = var.source_code_branch
+        PollForSourceChanges : "false"
+        BranchName = var.source_code_branch
       }
     }
   }

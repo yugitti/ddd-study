@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "codebuild_policy_document" {
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name = "${var.project}-${var.environment}-codebuild_policy"
+  name   = "${var.project}-${var.environment}-codebuild_policy"
   role   = aws_iam_role.codebuild_role.name
   policy = data.aws_iam_policy_document.codebuild_policy_document.json
 }
@@ -291,8 +291,44 @@ data "aws_iam_policy_document" "codepipeline_policy_document" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "${var.project}-${var.environment}-codepipeline_policy"
+  name   = "${var.project}-${var.environment}-codepipeline_policy"
   role   = aws_iam_role.codepipeline_role.name
   policy = data.aws_iam_policy_document.codepipeline_policy_document.json
 }
 
+
+# --------------------------------
+# EventBridge Service Role
+# --------------------------------
+resource "aws_iam_role" "eventbridge_role" {
+  name = "${var.project}-${var.environment}-eventbridge_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "events.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+data "aws_iam_policy_document" "eventbridge_policy_document" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    actions = [
+      "codepipeline:StartPipelineExecution"
+    ]
+    resources = [aws_codepipeline.codepipeline.arn]
+  }
+}
+
+resource "aws_iam_role_policy" "eventbridge_policy" {
+  name   = "${var.project}-${var.environment}-eventbridge_policy"
+  role   = aws_iam_role.eventbridge_role.name
+  policy = data.aws_iam_policy_document.eventbridge_policy_document.json
+}

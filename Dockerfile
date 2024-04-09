@@ -1,5 +1,5 @@
 # Amazon CorrettoのDockerイメージをベースとする
-FROM amazoncorretto:21
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:21
 
 # 作業ディレクトリを設定
 WORKDIR /usr/src/app
