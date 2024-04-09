@@ -17,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.logging.Logger;
 @RestController
 public class CommandUserController {
-
+    private static final Logger logger = Logger.getLogger(CommandUserController.class.getName());
     private final CreateUserUsecase createUserUsecase;
     private final CreateUserMapper userCreateMapper;
     private final UpdateUserUsecase updateUserUsecase;
@@ -39,7 +39,9 @@ public class CommandUserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserRes userCreateController(@Valid @RequestBody CreateUserBody body){
         CreateUserParams params = this.userCreateMapper.toCreateUserParams(body);
-        return createUserUsecase.run(params);
+        UserRes res =  createUserUsecase.run(params);
+        logger.info(res.toString());
+        return res;
 
     }
 
