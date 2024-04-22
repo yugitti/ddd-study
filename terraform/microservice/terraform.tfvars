@@ -1,0 +1,15 @@
+project             = "ddd-study"
+environment         = "dev"
+domain              = "tsukiyo-project.net"
+tfstate_bucket      = "ddd-study-tfstate-bucket-yugi"
+tfstate_key         = "ddd-study-dev.tfstate"
+container_name      = "ddd-study"
+container_port      = 8080
+min_capacity        = 1
+max_capacity        = 1
+account_id          = "573320755782"
+docker_dir          = "/Users/yugi/programing/workspace/java/ddd-study/"
+rds_database_name   = "dddStudy"
+rds_master_username = "local"
+rds_engine          = "aurora-mysql"
+rds_engine_version  = "8.0"

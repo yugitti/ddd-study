@@ -1,0 +1,5 @@
+project         = "ddd-study"
+environment     = "dev"
+tfstate_bucket  = "ddd-study-tfstate-bucket-yugi"
+tfstate_key     = "ddd-study-dev.tfstate"
+public_key_path = "/Users/yugi/programing/workspace/java/ddd-study/keys/basion-keypair.pub"

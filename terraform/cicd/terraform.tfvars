@@ -1,0 +1,8 @@
+project                     = "ddd-study"
+environment                 = "dev"
+tfstate_bucket              = "ddd-study-tfstate-bucket-yugi"
+tfstate_microservice_key    = "ddd-study-dev-microservice.tfstate"
+account_id                  = "573320755782"
+source_code_repository_name = "ddd-study"
+source_code_branch          = "release"
+container_name              = "ddd-study"
